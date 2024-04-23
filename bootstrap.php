@@ -828,14 +828,10 @@ function mailchimp_get_product_count() {
  * @return int
  */
 function mailchimp_get_order_count() {
-    $posts = mailchimp_count_posts('shop_order');
-    unset($posts['auto-draft'], $posts['trash']);
-    $total = 0;
-    foreach ($posts as $status => $count) {
-        $total += $count;
-    }
+    $total = wc_orders_count('wc-completed');
     return $total;
 }
+
 
 function mailchimp_get_customer_count() {
     global $wpdb;

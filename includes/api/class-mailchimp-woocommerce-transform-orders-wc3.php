@@ -404,22 +404,20 @@ class MailChimp_WooCommerce_Transform_Orders {
 		}
 
 		$params = array(
-			'post_type'      => 'shop_order',
-			// 'post_status' => array_keys(wc_get_order_statuses()),
-			'post_status'    => 'wc-completed',
-			'posts_per_page' => $posts,
-			'offset'         => $offset,
-			'orderby'        => 'id',
-			'order'          => 'ASC',
-			'fields'         => 'ids',
+			'type'      => 'shop_order',
+			'status'    => 'wc-completed',
+			'limit' 	=> $posts,
+			'offset'    => $offset,
+			'orderby'   => 'ID',
+			'order'     => 'ASC',
+			'return'    => 'ids',
 		);
 
-		$orders = get_posts( $params );
+		$orders = wc_get_orders( $params );
 		if ( empty( $orders ) ) {
 			sleep( 2 );
-			$orders = get_posts( $params );
+			$orders = wc_get_orders( $params );
 		}
-
 		return empty( $orders ) ? false : $orders;
 	}
 
